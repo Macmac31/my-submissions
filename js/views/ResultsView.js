@@ -4,6 +4,23 @@ class ResultsView extends View {
   _parentElement = document.querySelector(".results__list");
   _errorMessage = "No listings match that search. Try a barangay name.";
 
+  // Event delegation: one listener on the <ul>, so it survives re-renders.
+  addSelectHandler(handler) {
+    this._parentElement.addEventListener("click", (e) => {
+      const card = e.target.closest(".card");
+      if (!card) return;
+      handler(card.dataset.id);
+    });
+  }
+
+  // Re-render wipes the cards, so the controller calls this after every render.
+  markSelected(id) {
+    this._parentElement.querySelectorAll(".card").forEach((card) => {
+      // main.css highlights .card[aria-pressed="true"]
+      card.setAttribute("aria-pressed", String(card.dataset.id === id));
+    });
+  }
+
   _generateMarkupCard = (listing) => {
     // Gi destructure nato dire ang object
     const {
@@ -51,7 +68,9 @@ class ResultsView extends View {
   };
 
   _generateMarkup = () => {
-    return this._data.map((listing) => this._generateMarkupCard(listing)).join("");
+    return this._data
+      .map((listing) => this._generateMarkupCard(listing))
+      .join("");
   };
 }
 

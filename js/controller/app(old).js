@@ -1,6 +1,6 @@
-import * as model from "./model.js";
-import searchView from "./views/SearchView.js";
-import resultsView from "./views/ResultsView.js";
+import * as model from "../model/model.js";
+import searchView from "../views/SearchView.js";
+import resultsView from "../views/ResultsView.js";
 // ELEMENTS
 const resultsList = document.querySelector(".results__list");
 const detailsContainer = document.querySelector(".detail");
